@@ -28,3 +28,10 @@ func HandlerAddData(w http.ResponseWriter, r *http.Request) {
 	w.WriteHeader(http.StatusCreated)
 
 }
+
+func HandlerClearData(w http.ResponseWriter, r *http.Request) {
+	appName := r.PathValue("appName")
+	storage.SetData(appName, []*models.ZeppMemoryStruct{})
+	w.WriteHeader(http.StatusCreated)
+
+}

@@ -13,6 +13,8 @@ func RunServer() {
 
 	//API HANDLERS
 	http.HandleFunc("/{appName}", api.HandlerDisplayData)
+
+	http.HandleFunc("DELETE /add-data/{appName}", api.HandlerClearData)
 	http.HandleFunc("POST /add-data/{appName}", api.HandlerAddData)
 
 	logger, _ := zap.NewDevelopment()
