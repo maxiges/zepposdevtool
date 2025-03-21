@@ -2,6 +2,7 @@ package api
 
 import (
 	"bytes"
+	"fmt"
 	"io"
 	"my-chart-app/internal/models"
 	"my-chart-app/internal/storage"
@@ -104,22 +105,38 @@ func HandlerDisplayData(w http.ResponseWriter, r *http.Request) {
 	dataBytes, _ := io.ReadAll(&b)
 	w.Write(dataBytes)
 
-	createDiagram(w, diagramsInTime, xLabels, "System")
-	createDiagram(w, diagramsInTimePer, xLabels, "System by %")
-	createDiagram(w, diagramsInTime2, xLabels, "Modules")
+	w.Write([]byte("<div class=\"charts\">"))
+	w.Write([]byte("<div class=\"row\">"))
+	w.Write([]byte("<div class=\"col col-xl-6\">"))
+	createDiagram(w, diagramsInTime, xLabels, "System", "SYSTEM")
+	w.Write([]byte("</div>"))
+	w.Write([]byte("<div class=\"col col-xl-6\">"))
+	createDiagram(w, diagramsInTimePer, xLabels, "System by %", "SYSTEM_PER")
+	w.Write([]byte("</div>"))
+	w.Write([]byte("<div class=\"col col-xl-6\">"))
+	createDiagram(w, diagramsInTime2, xLabels, "Modules", "MODULES")
+	w.Write([]byte("</div>"))
+	w.Write([]byte("</div></div>"))
 
 }
 
-func createDiagram(w http.ResponseWriter, data map[string][]opts.LineData, xLabels []int, chartText string) {
+func createDiagram(w http.ResponseWriter, data map[string][]opts.LineData, xLabels []int, chartText string, chartID string) {
+	w.Write([]byte(fmt.Sprintf("<p class=\"text-center fs-4 fw-bold text-primary\">%s</p>", chartText)))
 	line := charts.NewLine()
 	line.SetGlobalOptions(
-		charts.WithInitializationOpts(opts.Initialization{Theme: types.ThemeMacarons}),
-		charts.WithTitleOpts(opts.Title{
-			Title: chartText,
-		}))
+		charts.WithInitializationOpts(opts.Initialization{Theme: types.ThemeMacarons, ChartID: chartID}),
+	)
 
 	for key, val := range data {
-		line.AddSeries(key, val)
+		line.AddSeries(key, val, charts.WithSeriesOpts(func(s *charts.SingleSeries) {
+			// default is 1000
+			s.AnimationDuration = 1
+			s.AnimationDurationUpdate = 0
+			falseVal := false
+			s.Animation = &falseVal
+
+		}),
+		)
 	}
 
 	line.SetXAxis(xLabels)

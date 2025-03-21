@@ -17,5 +17,7 @@ func main() {
 	defer logger.Sync()
 
 	//run server
+
 	server.RunServer()
+
 }
