@@ -5,3 +5,7 @@ type TemplateData struct {
 	TotalKB uint64
 	AppName string
 }
+
+type BasicAppValues struct {
+	AppName string
+}

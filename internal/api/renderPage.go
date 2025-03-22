@@ -8,6 +8,7 @@ import (
 	"my-chart-app/internal/storage"
 	"my-chart-app/static"
 	"net/http"
+	"sort"
 	"text/template"
 
 	"github.com/go-echarts/go-echarts/v2/charts"
@@ -134,10 +135,13 @@ func createDiagram(w http.ResponseWriter, data map[string][]opts.LineData, xLabe
 			s.AnimationDurationUpdate = 0
 			falseVal := false
 			s.Animation = &falseVal
-
 		}),
 		)
 	}
+
+	sort.Slice(line.MultiSeries, func(i, j int) bool {
+		return line.MultiSeries[i].Name < line.MultiSeries[j].Name
+	})
 
 	line.SetXAxis(xLabels)
 	// Put data into instance

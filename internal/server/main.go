@@ -12,6 +12,8 @@ const ServerPort = ":8081"
 func RunServer() {
 
 	//API HANDLERS
+
+	http.HandleFunc("/", api.HandlerDisplayMainPage)
 	http.HandleFunc("/{appName}", api.HandlerDisplayData)
 
 	http.HandleFunc("DELETE /add-data/{appName}", api.HandlerClearData)
