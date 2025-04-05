@@ -2,6 +2,7 @@ package api
 
 import (
 	"encoding/json"
+	"my-chart-app/internal/gui"
 	"my-chart-app/internal/models"
 	"my-chart-app/internal/storage"
 	"net/http"
@@ -18,6 +19,8 @@ func HandlerAddData(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	dataStruct.TimeStamp = time.Now()
+
+	defer gui.TryRefreshUI(appName)
 
 	val, exist := storage.GetDataForApp(appName)
 	if !exist {

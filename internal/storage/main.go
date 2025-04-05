@@ -23,6 +23,14 @@ func SetData(appName string, data []*models.ZeppMemoryStruct) {
 	defer lock.Unlock()
 	storageData[appName] = data
 }
+func ClearAllDataForApp(appName string) {
+	lock.Lock()
+	defer lock.Unlock()
+	_, exist := storageData[appName]
+	if exist {
+		storageData[appName] = []*models.ZeppMemoryStruct{}
+	}
+}
 
 func AddDataForApp(appName string) (ZeppMemoryData, bool) {
 	data, exist := storageData[appName]

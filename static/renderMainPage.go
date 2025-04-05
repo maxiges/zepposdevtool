@@ -38,10 +38,7 @@ var RenderPageTop = `
 		</div>
 	</div>
 </div>
-
-
-
- </div>
+</div>
 
 
 
@@ -70,9 +67,5 @@ function autoRefresh(obj) {
         }, obj.value);
     }
 }
-
 </script>
- <style>
-
- </style>
 `
