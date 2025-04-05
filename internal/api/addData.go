@@ -2,6 +2,7 @@ package api
 
 import (
 	"encoding/json"
+	"my-chart-app/internal/gui"
 	"my-chart-app/internal/models"
 	"my-chart-app/internal/storage"
 	"net/http"
@@ -19,12 +20,21 @@ func HandlerAddData(w http.ResponseWriter, r *http.Request) {
 	}
 	dataStruct.TimeStamp = time.Now()
 
+	defer gui.TryRefreshUI(appName)
+
 	val, exist := storage.GetDataForApp(appName)
 	if !exist {
 		val = []*models.ZeppMemoryStruct{}
 	}
 	val = append(val, dataStruct)
 	storage.SetData(appName, val)
+	w.WriteHeader(http.StatusCreated)
+
+}
+
+func HandlerClearData(w http.ResponseWriter, r *http.Request) {
+	appName := r.PathValue("appName")
+	storage.SetData(appName, []*models.ZeppMemoryStruct{})
 	w.WriteHeader(http.StatusCreated)
 
 }
