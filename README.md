@@ -150,3 +150,39 @@ A description can be attached to each package with a memory dump, as a string, t
 }
 
 ```
+
+
+
+
+### Build 
+Require go 1.24+ 
+
+https://go.dev/doc/install
+
+The backend of giu depends on OpenGL 3.3
+
+
+# MacOS
+xcode-select --install
+
+# Windows
+Install mingw download here. Thanks @alchem1ster!
+Add the binaries folder of mingw to the path (usually is \mingw64\bin).
+
+# Linux
+sudo apt install libx11-dev libxcursor-dev libxrandr-dev libxinerama-dev libxi-dev libglx-dev libgl1-mesa-dev libxxf86vm-dev
+
+Redhat:
+
+sudo dnf install libX11-devel libXcursor-devel libXrandr-devel libXinerama-devel libXi-devel libGL-devel libXxf86vm-devel
+
+you may also need to install C/C++ compiler (like g++) if it isn't already installed. Follow go compiler prompts.
+
+sudo dpkg --add-architecture arm64
+sudo apt update
+sudo apt install gcc-aarch64-linux-gnu g++-aarch64-linux-gnu \
+    libx11-dev:arm64 libxcursor-dev:arm64 libxrandr-dev:arm64 libxinerama-dev:arm64 libxi-dev:arm64 libglx-dev:arm64 libgl1-mesa-dev:arm64 libxxf86vm-dev:arm64
+GOOS=linux GOARCH=arm64 CGO_ENABLED=1 CC=aarch64-linux-gnu-gcc CXX=aarch64-linux-gnu-g++ HOST=aarch64-linux-gnu go build -v
+
+
+
