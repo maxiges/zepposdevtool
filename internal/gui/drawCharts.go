@@ -2,8 +2,8 @@ package gui
 
 import (
 	"fmt"
-	"my-chart-app/internal/models"
-	"my-chart-app/internal/storage"
+	"zepp-os-dev-tool/internal/models"
+	"zepp-os-dev-tool/internal/storage"
 
 	g "github.com/AllenDang/giu"
 	"github.com/inhies/go-bytesize"

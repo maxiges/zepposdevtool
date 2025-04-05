@@ -1,8 +1,8 @@
 package server
 
 import (
-	"my-chart-app/internal/api"
 	"net/http"
+	"zepp-os-dev-tool/internal/api"
 
 	"go.uber.org/zap"
 )

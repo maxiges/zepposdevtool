@@ -1,4 +1,4 @@
-module my-chart-app
+module zepp-os-dev-tool
 
 go 1.24.1
 

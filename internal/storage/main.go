@@ -1,8 +1,8 @@
 package storage
 
 import (
-	"my-chart-app/internal/models"
 	"sync"
+	"zepp-os-dev-tool/internal/models"
 )
 
 var storageData = make(map[string][]*models.ZeppMemoryStruct, 0)

@@ -3,8 +3,8 @@ package main
 import (
 	"flag"
 	"fmt"
-	"my-chart-app/internal/gui"
-	"my-chart-app/internal/server"
+	"zepp-os-dev-tool/internal/gui"
+	"zepp-os-dev-tool/internal/server"
 
 	"go.uber.org/zap"
 	"go.uber.org/zap/zapcore"
@@ -33,8 +33,7 @@ func main() {
 		server.RunServer()
 
 	} else {
-		go server.RunServer()
-		gui.RunGui(wFlag, hFlag)
+		go gui.RunGui(wFlag, hFlag)
 
 	}
 

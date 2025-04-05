@@ -1,5 +1,5 @@
 package gui
 
-import "my-chart-app/static"
+import "zepp-os-dev-tool/static"
 
 var defaultMd = static.RenderReadme

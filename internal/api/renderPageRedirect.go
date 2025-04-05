@@ -4,11 +4,11 @@ import (
 	"bytes"
 	"fmt"
 	"io"
-	"my-chart-app/internal/models"
-	"my-chart-app/internal/storage"
-	"my-chart-app/static"
 	"net/http"
 	"text/template"
+	"zepp-os-dev-tool/internal/models"
+	"zepp-os-dev-tool/internal/storage"
+	"zepp-os-dev-tool/static"
 
 	"go.uber.org/zap"
 )

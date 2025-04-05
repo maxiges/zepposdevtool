@@ -2,12 +2,13 @@ package api
 
 import (
 	"encoding/json"
-	"my-chart-app/internal/gui"
-	"my-chart-app/internal/models"
-	"my-chart-app/internal/storage"
 	"net/http"
 	"time"
+	"zepp-os-dev-tool/internal/models"
+	"zepp-os-dev-tool/internal/storage"
 )
+
+var RefreshFun func(appName string)
 
 func HandlerAddData(w http.ResponseWriter, r *http.Request) {
 	appName := r.PathValue("appName")
@@ -20,7 +21,9 @@ func HandlerAddData(w http.ResponseWriter, r *http.Request) {
 	}
 	dataStruct.TimeStamp = time.Now()
 
-	defer gui.TryRefreshUI(appName)
+	if RefreshFun != nil {
+		defer RefreshFun(appName)
+	}
 
 	val, exist := storage.GetDataForApp(appName)
 	if !exist {

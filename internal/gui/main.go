@@ -1,7 +1,8 @@
 package gui
 
 import (
-	"my-chart-app/internal/storage"
+	"zepp-os-dev-tool/internal/api"
+	"zepp-os-dev-tool/internal/storage"
 
 	g "github.com/AllenDang/giu"
 )
@@ -110,6 +111,7 @@ func RunGui(wFlag, hFlag *int) {
 	if hFlag != nil && *hFlag > 0 {
 		windowH = *hFlag
 	}
+	api.RefreshFun = TryRefreshUI
 
 	wnd := g.NewMasterWindow("Plot", windowW, windowH, g.MasterWindowFlagsNotResizable)
 	wnd.Run(loop)
