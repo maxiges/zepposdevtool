@@ -34,7 +34,7 @@ func GenerateDataForData(appName string) {
 	usedVal := data[len(data)-1].Memory.System.Used
 	usedData := bytesize.New(float64(usedVal))
 
-	*MemoryLabel = *g.Label(fmt.Sprintf("Total memory: %d -> %s , User %s  (%.2f %)", dashboardData.Total, bSize, usedData, float64(usedVal*100)/float64(dashboardData.Total)))
+	*MemoryLabel = *g.Label(fmt.Sprintf("Total memory: %d (%s)  Used: %s  (%.2f %%)", dashboardData.Total, bSize, usedData, float64(usedVal*100)/float64(dashboardData.Total)))
 
 	for i, dataRecord := range data {
 		// SYSTEM
