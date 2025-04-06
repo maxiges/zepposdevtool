@@ -34,7 +34,6 @@ func main() {
 
 	} else {
 		go gui.RunGui(wFlag, hFlag)
-
+		server.RunServer()
 	}
-
 }
