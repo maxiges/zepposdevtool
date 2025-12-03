@@ -3,8 +3,9 @@ package main
 import (
 	"flag"
 	"fmt"
-	"my-chart-app/internal/gui"
-	"my-chart-app/internal/server"
+
+	"github.com/maxiges/ZeppOsDevTool/internal/gui"
+	"github.com/maxiges/ZeppOsDevTool/internal/server"
 
 	"go.uber.org/zap"
 	"go.uber.org/zap/zapcore"

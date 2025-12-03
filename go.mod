@@ -1,4 +1,4 @@
-module my-chart-app
+module github.com/maxiges/ZeppOsDevTool
 
 go 1.24.1
 

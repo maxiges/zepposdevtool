@@ -1,5 +1,5 @@
 ## What should you do to be able to obtain a chart with memory?
-a) Add to your watch side app so that your watch sends mememory information to your app side
+a) Add to your watch side app so that your watch sends memory information to your app side
  getPerformance('memory')
  setup this.call 
  (Example below)
