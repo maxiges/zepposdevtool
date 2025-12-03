@@ -2,7 +2,8 @@ package server
 
 import (
 	"net/http"
-	"zepp-os-dev-tool/internal/api"
+
+	"github.com/maxiges/ZeppOsDevTool/internal/api"
 
 	"go.uber.org/zap"
 )
@@ -12,6 +13,7 @@ const ServerPort = ":8081"
 func RunServer() {
 
 	//API HANDLERS
+	http.HandleFunc("/app/echo", api.HandlerEcho)
 
 	http.HandleFunc("/", api.HandlerDisplayMainPage)
 	http.HandleFunc("/{appName}", api.HandlerDisplayData)

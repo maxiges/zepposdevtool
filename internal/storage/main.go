@@ -2,7 +2,8 @@ package storage
 
 import (
 	"sync"
-	"zepp-os-dev-tool/internal/models"
+
+	"github.com/maxiges/ZeppOsDevTool/internal/models"
 )
 
 var storageData = make(map[string][]*models.ZeppMemoryStruct, 0)

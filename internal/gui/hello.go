@@ -1,5 +1,5 @@
 package gui
 
-import "zepp-os-dev-tool/static"
+import "github.com/maxiges/ZeppOsDevTool/static"
 
 var defaultMd = static.RenderReadme

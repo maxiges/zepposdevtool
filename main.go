@@ -3,8 +3,9 @@ package main
 import (
 	"flag"
 	"fmt"
-	"zepp-os-dev-tool/internal/gui"
-	"zepp-os-dev-tool/internal/server"
+
+	"github.com/maxiges/ZeppOsDevTool/internal/gui"
+	"github.com/maxiges/ZeppOsDevTool/internal/server"
 
 	"go.uber.org/zap"
 	"go.uber.org/zap/zapcore"
@@ -36,4 +37,5 @@ func main() {
 		go gui.RunGui(wFlag, hFlag)
 		server.RunServer()
 	}
+
 }

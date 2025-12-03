@@ -27,6 +27,6 @@ jobs:
     - name: Archive code
       uses: actions/upload-artifact@v4
       with:
-        name: code-coverage-report
+        name: build-linux
         path: bin/*
         retention-days: 14

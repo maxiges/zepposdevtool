@@ -1,4 +1,4 @@
-module zepp-os-dev-tool
+module github.com/maxiges/ZeppOsDevTool
 
 go 1.24.1
 

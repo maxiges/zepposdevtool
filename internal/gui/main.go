@@ -1,8 +1,7 @@
 package gui
 
 import (
-	"zepp-os-dev-tool/internal/api"
-	"zepp-os-dev-tool/internal/storage"
+	"github.com/maxiges/ZeppOsDevTool/internal/storage"
 
 	g "github.com/AllenDang/giu"
 )
@@ -25,7 +24,12 @@ var (
 	Plot2        *g.PlotCanvasWidget
 	Plot3        *g.PlotCanvasWidget
 
-	MemoryLabel *g.LabelWidget
+	MemoryLabel       *g.LabelWidget
+	MemorySizeUsedBar *g.ProgressBarWidget
+
+	SelectMem1 *g.CheckboxWidget
+	SelectMem2 *g.CheckboxWidget
+	SelectMem3 *g.CheckboxWidget
 )
 
 var (
@@ -44,6 +48,7 @@ var (
 )
 
 func firstLayout() {
+
 	currentMenu = MenuHello
 	MainUILayout = g.Layout{
 		g.Markdown(markdown).
@@ -111,7 +116,6 @@ func RunGui(wFlag, hFlag *int) {
 	if hFlag != nil && *hFlag > 0 {
 		windowH = *hFlag
 	}
-	api.RefreshFun = TryRefreshUI
 
 	wnd := g.NewMasterWindow("Plot", windowW, windowH, g.MasterWindowFlagsNotResizable)
 	wnd.Run(loop)
