@@ -12,3 +12,5 @@ release-linux:
 	go mod vendor
 	gox  -output="bin/{{.OS}}/{{.Arch}}/{{.Dir}}"  -osarch="linux/amd64"
 
+
+

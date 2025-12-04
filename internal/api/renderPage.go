@@ -17,6 +17,23 @@ import (
 	"go.uber.org/zap"
 )
 
+// HandlerDisplayData renders a comprehensive memory profiling dashboard for a specific application.
+//
+// This handler generates an HTML page with interactive charts displaying:
+// 1. System memory usage over time (absolute values)
+// 2. System memory usage as a percentage
+// 3. Per-module memory usage breakdown for the application
+//
+// The handler retrieves stored memory profiling data for the specified application and
+// visualizes it using line charts. If no data exists for the application, it renders
+// a message indicating no data was found.
+//
+// Request Path Parameters:
+// - appName: the identifier of the application to display data for
+//
+// Response: HTML page with embedded ECharts visualizations
+//
+// Example GET: /api/display/my-app
 func HandlerDisplayData(w http.ResponseWriter, r *http.Request) {
 
 	appName := r.PathValue("appName")
@@ -32,12 +49,17 @@ func HandlerDisplayData(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	// Initialize dashboard template data with app name and total memory info
 	dashboardData := models.TemplateData{
 		AppName: appName,
 		Total:   data[len(data)-1].Memory.System.Total,
 		TotalKB: data[len(data)-1].Memory.System.Total / 1024,
 	}
 
+	// Initialize data structures to collect chart data series:
+	// diagramsInTime: absolute memory values (bytes)
+	// diagramsInTimePer: memory values as percentages
+	// diagramsInTime2: per-module memory usage breakdown
 	diagramsInTime := map[string][]opts.LineData{}
 	diagramsInTimePer := map[string][]opts.LineData{}
 	diagramsInTime2 := map[string][]opts.LineData{}
@@ -47,7 +69,8 @@ func HandlerDisplayData(w http.ResponseWriter, r *http.Request) {
 		xLabels = append(xLabels, i)
 		dashboardData.Total = dataRecord.Memory.System.Total
 
-		// SYSTEM
+		// === SYSTEM MEMORY DATA ===
+		// Track absolute system memory usage (Used)
 		val := diagramsInTime["system-used"]
 		if len(val) == 0 {
 			val = []opts.LineData{}
@@ -55,6 +78,7 @@ func HandlerDisplayData(w http.ResponseWriter, r *http.Request) {
 		val = append(val, opts.LineData{Value: dataRecord.Memory.System.Used, XAxisIndex: i, Name: dataRecord.Description})
 		diagramsInTime["system-used"] = val
 
+		// Track absolute system memory total capacity
 		val2 := diagramsInTime["system-total"]
 		if len(val2) == 0 {
 			val2 = []opts.LineData{}
@@ -69,7 +93,8 @@ func HandlerDisplayData(w http.ResponseWriter, r *http.Request) {
 		val3 = append(val3, opts.LineData{Value: dataRecord.Memory.System.Used * 100 / dataRecord.Memory.System.Total, XAxisIndex: i, Symbol: "roundRect", Name: dataRecord.Description})
 		diagramsInTimePer["system-used-%"] = val3
 
-		// APP
+		// === APPLICATION MODULE DATA ===
+		// Track total memory used by the application
 		valAppTotal := diagramsInTime2["Total_used_by_app"]
 		if len(valAppTotal) == 0 {
 			valAppTotal = []opts.LineData{}
@@ -77,6 +102,7 @@ func HandlerDisplayData(w http.ResponseWriter, r *http.Request) {
 		valAppTotal = append(valAppTotal, opts.LineData{Value: dataRecord.Memory.App[0].Used, XAxisIndex: i, Name: dataRecord.Description})
 		diagramsInTime2["Total_used_by_app"] = valAppTotal
 
+		// Track per-module memory usage for each module in the application
 		for _, moduleVal := range dataRecord.Memory.App[0].Modules {
 			valAppModule := diagramsInTime2[moduleVal.File+"(Used)"]
 			if len(valAppModule) == 0 {
@@ -121,6 +147,27 @@ func HandlerDisplayData(w http.ResponseWriter, r *http.Request) {
 
 }
 
+// createDiagram generates and renders an ECharts line chart with the provided data.
+//
+// This helper function:
+// 1. Writes a formatted title for the chart
+// 2. Creates a line chart with optimized rendering settings (animations disabled)
+// 3. Adds all data series to the chart
+// 4. Sorts series alphabetically by name for consistent display
+// 5. Configures smooth line interpolation
+// 6. Renders the complete chart to the HTTP response
+//
+// Parameters:
+// - w: HTTP response writer to write chart HTML to
+// - data: map of series names to LineData arrays containing the chart data points
+// - xLabels: array of x-axis labels (typically data point indices or timestamps)
+// - chartText: display title for the chart
+// - chartID: unique identifier for the ECharts instance
+//
+// The chart is configured with:
+// - Animation disabled (AnimationDuration: 1, Animation: false)
+// - Smooth line curves for better visualization
+// - Macarons theme for consistent styling
 func createDiagram(w http.ResponseWriter, data map[string][]opts.LineData, xLabels []int, chartText string, chartID string) {
 	w.Write([]byte(fmt.Sprintf("<p class=\"text-center fs-4 fw-bold text-primary\">%s</p>", chartText)))
 	line := charts.NewLine()

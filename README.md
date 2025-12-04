@@ -1,5 +1,5 @@
 ## What should you do to be able to obtain a chart with memory?
-a) Add to your watch side app so that your watch sends mememory information to your app side
+a) Add to your watch side app so that your watch sends memory information to your app side
  getPerformance('memory')
  setup this.call 
  (Example below)
@@ -16,12 +16,10 @@ To add data, you need to send it to the server
 API Method: POST
 URL: http://localhost:8081/add-data/<YOUR_APP_NAME>
 Body: Data as JSON
-
 memory object is 1:1 from  getPerformance('memory', 'perf');
-
-
 This can be done by adding the field in the app-side:
 
+==== app-service/index.js=====
 example:
 
 ```javascript
@@ -73,8 +71,28 @@ example data:
     },
     "description": "1:56:03 PM"
 }
-
 ```
+
+
+Watch app side
+==== app.js =====
+
+```javascript
+import { getPerformance } from '@zos/app'
+(...)
+
+      setInterval(() => {
+        const resp = getPerformance('memory');
+        this.call({
+          method: 'MEMORY',
+          data: JSON.stringify(resp),
+        });
+      }, 1000);
+      
+      ! Don't forget to remove the interval in onDestroy
+      clearInterval(intervalID)
+```
+
 
 To clear data,. You can start the server, but I know it is inconvenient, so you can run trigger API to clear the cache
 
@@ -96,18 +114,7 @@ example:
 ```
 
 
-Watch app side
 
-```javascript
-
-      setInterval(() => {
-        const resp = getPerformance('memory');
-        this.call({
-          method: 'MEMORY',
-          data: JSON.stringify(resp),
-        });
-      }, 1000);
-```
 
 
 

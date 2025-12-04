@@ -25,7 +25,14 @@ var (
 	Plot2        *g.PlotCanvasWidget
 	Plot3        *g.PlotCanvasWidget
 
-	MemoryLabel *g.LabelWidget
+	MemoryLabel       *g.LabelWidget
+	MemorySizeUsedBar *g.ProgressBarWidget
+
+	SelectMem1 *g.CheckboxWidget
+	SelectMem2 *g.CheckboxWidget
+	SelectMem3 *g.CheckboxWidget
+
+	AutoMove *g.CheckboxWidget
 )
 
 var (
