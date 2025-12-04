@@ -1,12 +1,26 @@
+A tool to help detect memory leaks in Zepp OS applications
+
+Program configuration options:
+```
+Flags:
+	-height int      Window height (default 1800)
+	-width int       Window width (default 900)
+	-disableGUI bool Don't show the GUI (by default the GUI is shown)
+```
+
+
+
 ## What should you do to be able to obtain a chart with memory?
+
 a) Add to your watch side app so that your watch sends memory information to your app side
- getPerformance('memory')
- setup this.call 
- (Example below)
- 
+getPerformance('memory')
+setup this.call
+(Example below)
+
 b) On the side-app side, send data to the application that will collect data
 c) Turn on the server that will collect data and display the data by visiting the website in a browser
 http://localhost:8081/<YOUR_APP_NAME>
+
 
 
 ## How to add Data
@@ -20,6 +34,8 @@ memory object is 1:1 from  getPerformance('memory', 'perf');
 This can be done by adding the field in the app-side:
 
 ==== app-service/index.js=====
+
+
 example:
 
 ```javascript
@@ -73,8 +89,8 @@ example data:
 }
 ```
 
-
 Watch app side
+
 ==== app.js =====
 
 ```javascript
@@ -88,11 +104,10 @@ import { getPerformance } from '@zos/app'
           data: JSON.stringify(resp),
         });
       }, 1000);
-      
+    
       ! Don't forget to remove the interval in onDestroy
       clearInterval(intervalID)
 ```
-
 
 To clear data,. You can start the server, but I know it is inconvenient, so you can run trigger API to clear the cache
 
@@ -113,14 +128,7 @@ example:
     },
 ```
 
-
-
-
-
-
-
 A description can be attached to each package with a memory dump, as a string, to make it easier to determine the moment when we want to check what is happening with the memory.
-
 
 ```json
 {
@@ -158,25 +166,25 @@ A description can be attached to each package with a memory dump, as a string, t
 
 ```
 
+## Build
 
-
-
-### Build 
-Require go 1.24+ 
+Require go 1.24+
 
 https://go.dev/doc/install
 
 The backend of giu depends on OpenGL 3.3
 
-
 # MacOS
+
 xcode-select --install
 
 # Windows
+
 Install mingw download here. Thanks @alchem1ster!
 Add the binaries folder of mingw to the path (usually is \mingw64\bin).
 
 # Linux
+
 sudo apt install libx11-dev libxcursor-dev libxrandr-dev libxinerama-dev libxi-dev libglx-dev libgl1-mesa-dev libxxf86vm-dev
 
 Redhat:
@@ -187,9 +195,6 @@ you may also need to install C/C++ compiler (like g++) if it isn't already insta
 
 sudo dpkg --add-architecture arm64
 sudo apt update
-sudo apt install gcc-aarch64-linux-gnu g++-aarch64-linux-gnu \
-    libx11-dev:arm64 libxcursor-dev:arm64 libxrandr-dev:arm64 libxinerama-dev:arm64 libxi-dev:arm64 libglx-dev:arm64 libgl1-mesa-dev:arm64 libxxf86vm-dev:arm64
+sudo apt install gcc-aarch64-linux-gnu g++-aarch64-linux-gnu 
+libx11-dev:arm64 libxcursor-dev:arm64 libxrandr-dev:arm64 libxinerama-dev:arm64 libxi-dev:arm64 libglx-dev:arm64 libgl1-mesa-dev:arm64 libxxf86vm-dev:arm64
 GOOS=linux GOARCH=arm64 CGO_ENABLED=1 CC=aarch64-linux-gnu-gcc CXX=aarch64-linux-gnu-g++ HOST=aarch64-linux-gnu go build -v
-
-
-
