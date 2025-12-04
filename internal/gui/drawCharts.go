@@ -60,7 +60,7 @@ func DrawChartsForApp(appName string) {
 		checked1 := valueUnitDivider == 1
 		checked2 := valueUnitDivider == 1024
 		checked3 := valueUnitDivider == 1024*1024
-		SelectMem1 = g.Checkbox("Baits", &checked1).OnChange(
+		SelectMem1 = g.Checkbox("Bytes", &checked1).OnChange(
 			func() {
 				checked1 = true
 				checked2 = false
@@ -70,7 +70,7 @@ func DrawChartsForApp(appName string) {
 			},
 		)
 
-		SelectMem2 = g.Checkbox("Kilo Baits", &checked2).OnChange(
+		SelectMem2 = g.Checkbox("Kilobytes", &checked2).OnChange(
 			func() {
 				checked1 = false
 				checked2 = true
@@ -79,7 +79,7 @@ func DrawChartsForApp(appName string) {
 			},
 		)
 
-		SelectMem3 = g.Checkbox("Mega Baits", &checked3).OnChange(
+		SelectMem3 = g.Checkbox("Megabytes", &checked3).OnChange(
 			func() {
 				checked1 = false
 				checked2 = false
