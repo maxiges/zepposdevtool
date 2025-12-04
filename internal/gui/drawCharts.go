@@ -19,7 +19,7 @@ var (
 
 	valueUnitDivider = 1024
 
-	autoDiagramLast30s = false
+	autoDiagramLast30s = int32(0)
 )
 
 // TryRefreshUI triggers a GUI update when appropriate.
@@ -88,21 +88,12 @@ func DrawChartsForApp(appName string) {
 			},
 		)
 
-		isChecked := autoDiagramLast30s
+		sliderValue := autoDiagramLast30s
 
-		AutoMove = g.Checkbox("Auto Move", &isChecked).OnChange(
-			func() {
-				if autoDiagramLast30s {
-					autoDiagramLast30s = false
-					isChecked = false
-				} else {
-					autoDiagramLast30s = true
-					isChecked = true
-				}
-
-				TryRefreshUI(appName)
-			},
-		)
+		AutoMove = g.SliderInt(&sliderValue, 0, 100).OnChange(func() {
+			autoDiagramLast30s = sliderValue
+			TryRefreshUI(appName)
+		}).Size(300)
 
 		MemoryLabel = g.Label("Total memory: ---")
 		MemorySizeUsedBar = g.ProgressBar(0)
@@ -113,7 +104,7 @@ func DrawChartsForApp(appName string) {
 					storage.ClearAllDataForApp(appName)
 				}),
 				g.Row(MemoryLabel, MemorySizeUsedBar),
-				g.Row(SelectMem1, SelectMem2, SelectMem3, AutoMove),
+				g.Row(SelectMem1, SelectMem2, SelectMem3, g.Label("Show only the last X values:"), AutoMove),
 				g.SplitLayout(g.DirectionVertical, &sashPos1,
 					g.Layout{
 						Plot1,
@@ -136,20 +127,21 @@ func DrawChartsForApp(appName string) {
 	plot2Data.GenerateX()
 	plot3Data.GenerateX()
 
-	if autoDiagramLast30s {
+	minX := 0
 
-		minX := 0
-		if float64(plot1Data.AxeXLen) > 30 {
-			minX = plot1Data.AxeXLen - 30
+	show := g.ConditionFirstUseEver
+
+	if autoDiagramLast30s > 0 {
+		show = g.ConditionAlways
+		if plot1Data.AxeXLen > int(autoDiagramLast30s) {
+			minX = plot1Data.AxeXLen - int(autoDiagramLast30s)
 		}
-
-		Plot1.AxisLimits(float64(minX), float64(plot1Data.AxeXLen), plot1Data.Min, plot1Data.Max, g.ConditionFirstUseEver)
 	}
 	chartHMax := windowH/2 - 100
 
-	Plot1.AxisLimits(0, float64(plot1Data.AxeXLen), plot1Data.Min-plot1Data.MinMaxDiff()*0.1, plot1Data.Max+plot1Data.MinMaxDiff()*0.1, g.ConditionOnce).XTicks(plot1Data.Ticks, false).Plots(plot1Data.GetPlots()...).Size(windowW/2, chartHMax)
-	Plot2.AxisLimits(0, float64(plot2Data.AxeXLen), plot2Data.Min-plot2Data.MinMaxDiff()*0.1, plot2Data.Max+plot2Data.MinMaxDiff()*0.1, g.ConditionOnce).XTicks(plot2Data.Ticks, false).Plots(plot2Data.GetPlots()...).Size(windowW/2, chartHMax)
-	Plot3.AxisLimits(0, float64(plot3Data.AxeXLen), plot3Data.Min-plot3Data.MinMaxDiff()*0.1, plot3Data.Max+plot3Data.MinMaxDiff()*0.1, g.ConditionOnce).XTicks(plot3Data.Ticks, false).Plots(plot3Data.GetPlots()...).Size(windowW, chartHMax)
+	Plot1.AxisLimits(float64(minX), float64(plot1Data.AxeXLen), plot1Data.Min-plot1Data.MinMaxDiff()*0.1, plot1Data.Max+plot1Data.MinMaxDiff()*0.1, show).XTicks(plot1Data.Ticks, false).Plots(plot1Data.GetPlots()...).Size(windowW/2, chartHMax)
+	Plot2.AxisLimits(float64(minX), float64(plot2Data.AxeXLen), plot2Data.Min-plot2Data.MinMaxDiff()*0.1, plot2Data.Max+plot2Data.MinMaxDiff()*0.1, show).XTicks(plot2Data.Ticks, false).Plots(plot2Data.GetPlots()...).Size(windowW/2, chartHMax)
+	Plot3.AxisLimits(float64(minX), float64(plot3Data.AxeXLen), plot3Data.Min-plot3Data.MinMaxDiff()*0.1, plot3Data.Max+plot3Data.MinMaxDiff()*0.1, show).XTicks(plot3Data.Ticks, false).Plots(plot3Data.GetPlots()...).Size(windowW, chartHMax)
 }
 
 // GenerateDataForData builds plot data for a given application.

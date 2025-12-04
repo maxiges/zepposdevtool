@@ -32,7 +32,7 @@ var (
 	SelectMem2 *g.CheckboxWidget
 	SelectMem3 *g.CheckboxWidget
 
-	AutoMove *g.CheckboxWidget
+	AutoMove *g.SliderIntWidget
 )
 
 var (

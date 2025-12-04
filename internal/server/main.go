@@ -23,6 +23,9 @@ func RunServer() {
 	logger.Sugar().Infof("Server started at: localhost%s", ServerPort)
 
 	//Run server
-	http.ListenAndServe(ServerPort, nil)
+	err := http.ListenAndServe(ServerPort, nil)
+	if err != nil {
+		logger.Sugar().Error(err.Error())
+	}
 
 }
