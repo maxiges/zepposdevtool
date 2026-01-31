@@ -3,15 +3,19 @@ package storage
 import (
 	"sync"
 	"zepp-os-dev-tool/internal/models"
+	"zepp-os-dev-tool/internal/utils"
 )
 
-var storageData = make(map[string][]*models.ZeppMemoryStruct, 0)
+var (
+	storageData     = make(map[string][]*models.ZeppMemoryStruct, 0)
+	storageDataLogs = make(map[string][]*models.ZeppLogs, 0)
+)
+
 var lock = sync.Mutex{}
 
 type ZeppMemoryData []*models.ZeppMemoryStruct
 
 func init() {
-
 }
 
 func GetDataForApp(appName string) (ZeppMemoryData, bool) {
@@ -26,10 +30,9 @@ func SetData(appName string, data []*models.ZeppMemoryStruct) {
 func ClearAllDataForApp(appName string) {
 	lock.Lock()
 	defer lock.Unlock()
-	_, exist := storageData[appName]
-	if exist {
-		storageData[appName] = []*models.ZeppMemoryStruct{}
-	}
+	delete(storageData, appName)
+	delete(storageDataLogs, appName)
+
 }
 
 func AddDataForApp(appName string) (ZeppMemoryData, bool) {
@@ -38,9 +41,31 @@ func AddDataForApp(appName string) (ZeppMemoryData, bool) {
 }
 
 func GetAppList() []string {
-	appNameList := make([]string, 0, len(storageData))
+	appSet := utils.NewSet[string]()
+
 	for appName := range storageData {
-		appNameList = append(appNameList, appName)
+		appSet.Add(appName)
 	}
-	return appNameList
+	for appName := range storageDataLogs {
+		appSet.Add(appName)
+	}
+	return appSet.ToList()
+}
+
+//------------
+
+func GetLogsForApp(appName string) ([]*models.ZeppLogs, bool) {
+	data, exist := storageDataLogs[appName]
+	return data, exist
+}
+func AddLogsForApp(appName string, log *models.ZeppLogs) {
+	data, exist := storageDataLogs[appName]
+	if !exist {
+		data = []*models.ZeppLogs{}
+	}
+	lock.Lock()
+	defer lock.Unlock()
+	data = append(data, log)
+	storageDataLogs[appName] = data
+
 }

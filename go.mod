@@ -3,25 +3,44 @@ module zepp-os-dev-tool
 go 1.24.1
 
 require (
-	github.com/AllenDang/giu v0.13.0
+	github.com/gin-gonic/contrib v0.0.0-20250521004450-2b1292699c15
+	github.com/gin-gonic/gin v1.11.0
 	github.com/go-echarts/go-echarts/v2 v2.5.2
-	github.com/inhies/go-bytesize v0.0.0-20220417184213-4913239db9cf
+	github.com/rs/cors v1.11.1
 	go.uber.org/zap v1.27.0
 )
 
 require (
-	github.com/AllenDang/cimgui-go v1.3.1 // indirect
-	github.com/AllenDang/go-findfont v0.0.0-20200702051237-9f180485aeb8 // indirect
-	github.com/faiface/mainthread v0.0.0-20171120011319-8b78f0a41ae3 // indirect
-	github.com/gucio321/glm-go v0.0.0-20241029220517-e1b5a3e011c8 // indirect
-	github.com/mazznoer/csscolorparser v0.1.5 // indirect
-	github.com/napsy/go-css v0.0.0-20221107082635-4ed403047a64 // indirect
-	github.com/pkg/browser v0.0.0-20210911075715-681adbf594b8 // indirect
-	github.com/sahilm/fuzzy v0.1.1 // indirect
+	github.com/bytedance/sonic v1.14.0 // indirect
+	github.com/bytedance/sonic/loader v0.3.0 // indirect
+	github.com/cloudwego/base64x v0.1.6 // indirect
+	github.com/gabriel-vasile/mimetype v1.4.8 // indirect
+	github.com/gin-contrib/sse v1.1.0 // indirect
+	github.com/go-playground/locales v0.14.1 // indirect
+	github.com/go-playground/universal-translator v0.18.1 // indirect
+	github.com/go-playground/validator/v10 v10.27.0 // indirect
+	github.com/goccy/go-json v0.10.2 // indirect
+	github.com/goccy/go-yaml v1.18.0 // indirect
+	github.com/json-iterator/go v1.1.12 // indirect
+	github.com/klauspost/cpuid/v2 v2.3.0 // indirect
+	github.com/leodido/go-urn v1.4.0 // indirect
+	github.com/mattn/go-isatty v0.0.20 // indirect
+	github.com/modern-go/concurrent v0.0.0-20180228061459-e0a39a4cb421 // indirect
+	github.com/modern-go/reflect2 v1.0.2 // indirect
+	github.com/pelletier/go-toml/v2 v2.2.4 // indirect
+	github.com/quic-go/qpack v0.5.1 // indirect
+	github.com/quic-go/quic-go v0.54.0 // indirect
+	github.com/twitchyliquid64/golang-asm v0.15.1 // indirect
+	github.com/ugorji/go/codec v1.3.0 // indirect
+	go.uber.org/mock v0.5.0 // indirect
 	go.uber.org/multierr v1.11.0 // indirect
-	golang.design/x/hotkey v0.4.1 // indirect
-	golang.design/x/mainthread v0.3.0 // indirect
-	golang.org/x/image v0.25.0 // indirect
-	golang.org/x/sys v0.25.0 // indirect
-	gopkg.in/eapache/queue.v1 v1.1.0 // indirect
+	golang.org/x/arch v0.20.0 // indirect
+	golang.org/x/crypto v0.40.0 // indirect
+	golang.org/x/mod v0.25.0 // indirect
+	golang.org/x/net v0.42.0 // indirect
+	golang.org/x/sync v0.16.0 // indirect
+	golang.org/x/sys v0.35.0 // indirect
+	golang.org/x/text v0.27.0 // indirect
+	golang.org/x/tools v0.34.0 // indirect
+	google.golang.org/protobuf v1.36.9 // indirect
 )

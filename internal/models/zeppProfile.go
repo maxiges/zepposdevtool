@@ -3,11 +3,11 @@ package models
 import "time"
 
 type ZeppMemoryStruct struct {
-	Memory      memory `json:"memory"`
-	Description string `json:"description,omitempty"`
-	TimeStamp   time.Time
+	Memory      Memory    `json:"memory"`
+	Description string    `json:"description,omitempty"`
+	TimeStamp   time.Time `json:"timestamp"`
 }
-type memory struct {
+type Memory struct {
 	App       []memoryDataForApp `json:"app,omitempty"`
 	Framework memoryData         `json:"framework"`
 	System    memoryData         `json:"system"`

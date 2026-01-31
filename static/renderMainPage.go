@@ -27,14 +27,20 @@ var RenderPageTop = `
 			<p>
 				<label for="change_refresh">Auto Refresh</label>
 			</p>
-			<select name="pets" id="select-refresh-time" onchange="autoRefresh(this);">
-			<option value="0">Off</option>
-			<option value="2000">2s</option>
-			<option value="5000">5s</option>
-			<option value="10000">10s</option>
-			<option value="30000">30s</option>
-			<option value="60000">60s</option>
-			</select>
+			 <select 
+            name="change_refresh" 
+            id="select-refresh-time" 
+            onchange="autoRefresh(this);" 
+            class="form-select form-select-sm w-auto" 
+            style="min-width: 80px;"
+        >
+            <option value="0">Off</option>
+            <option value="2000">2s</option>
+            <option value="5000">5s</option>
+            <option value="10000">10s</option>
+            <option value="30000">30s</option>
+            <option value="60000">60s</option>
+        </select>
 		</div>
 	</div>
 </div>

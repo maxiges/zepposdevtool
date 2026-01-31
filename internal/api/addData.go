@@ -80,7 +80,7 @@ func HandlerAddData(w http.ResponseWriter, r *http.Request) {
 // Example: DELETE /api/data/my-app/clear
 func HandlerClearData(w http.ResponseWriter, r *http.Request) {
 	appName := r.PathValue("appName")
-	storage.SetData(appName, []*models.ZeppMemoryStruct{})
+	storage.ClearAllDataForApp(appName)
 	w.WriteHeader(http.StatusCreated)
 
 }
